@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShopTest\Yves\CustomerPage\Form;
+namespace SprykerShopTest\Yves\CompanyPage\Controller;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
