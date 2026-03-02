@@ -76,11 +76,6 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
         throw new CustomerAccessDeniedException(static::GLOSSARY_KEY_COMPANY_PAGE_RESTRICTED);
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     *
-     * @return bool
-     */
     protected function isEventShouldBeHandled(ControllerEvent $event): bool
     {
         $eventController = $event->getController();
@@ -102,11 +97,6 @@ class CompanyBusinessUnitControllerRestrictionPlugin extends AbstractPlugin impl
         return true;
     }
 
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
     protected function getCompanyBusinessUnitTransfer(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
         return $this->getFactory()->getCompanyBusinessUnitClient()

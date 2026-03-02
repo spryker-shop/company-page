@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
     public function hasBusinessUnit(?CompanyUserTransfer $companyUserTransfer): bool;
 }

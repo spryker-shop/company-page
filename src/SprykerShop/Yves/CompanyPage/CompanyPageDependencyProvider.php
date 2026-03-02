@@ -113,11 +113,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const SERVICE_ROUTER = 'routers';
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -142,11 +137,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addBusinessOnBehalfClient(Container $container): Container
     {
         $container->set(static::CLIENT_BUSINESS_ON_BEHALF, function (Container $container) {
@@ -158,11 +148,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCsrfProviderService(Container $container): Container
     {
         $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (Container $container) {
@@ -172,11 +157,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCustomerClient(Container $container): Container
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
@@ -186,11 +166,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addStoreClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
@@ -200,11 +175,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyUnitAddressClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_UNIT_ADDRESS, function (Container $container) {
@@ -214,11 +184,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyUserClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_USER, function (Container $container) {
@@ -228,11 +193,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyRoleClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_ROLE, function (Container $container) {
@@ -242,11 +202,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY, function (Container $container) {
@@ -256,11 +211,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyBusinessUnitClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
@@ -270,11 +220,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addCompanyOverviewWidgetPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_COMPANY_OVERVIEW_WIDGETS, function () {
@@ -284,11 +229,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addPermissionClient(Container $container): Container
     {
         $container->set(static::CLIENT_PERMISSION, function (Container $container) {
@@ -298,11 +238,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addMessengerClient(Container $container): Container
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
@@ -312,11 +247,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addGlossaryStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
@@ -326,9 +256,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @return array
-     */
     protected function getCompanyOverviewWidgetPlugins(): array
     {
         return [];
@@ -368,11 +295,6 @@ class CompanyPageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
     protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {

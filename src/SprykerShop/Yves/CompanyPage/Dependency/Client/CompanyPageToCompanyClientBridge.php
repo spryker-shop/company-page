@@ -25,21 +25,11 @@ class CompanyPageToCompanyClientBridge implements CompanyPageToCompanyClientInte
         $this->companyClient = $companyClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
         return $this->companyClient->createCompany($companyTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
     {
         return $this->companyClient->getCompanyById($companyTransfer);

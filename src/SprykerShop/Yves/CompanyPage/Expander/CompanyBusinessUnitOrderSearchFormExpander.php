@@ -37,9 +37,6 @@ class CompanyBusinessUnitOrderSearchFormExpander implements CompanyBusinessUnitO
      */
     protected $companyBusinessUnitOrderSearchFormDataProvider;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider $companyBusinessUnitOrderSearchFormDataProvider
-     */
     public function __construct(CompanyBusinessUnitOrderSearchFormDataProvider $companyBusinessUnitOrderSearchFormDataProvider)
     {
         $this->companyBusinessUnitOrderSearchFormDataProvider = $companyBusinessUnitOrderSearchFormDataProvider;

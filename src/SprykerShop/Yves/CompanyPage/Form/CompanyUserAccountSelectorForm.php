@@ -43,19 +43,11 @@ class CompanyUserAccountSelectorForm extends AbstractType
      */
     public const FORM_NAME = 'company_user_account_selector_form';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::FORM_NAME;
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([static::OPTION_COMPANY_USER_ACCOUNT_CHOICES]);

@@ -107,11 +107,6 @@ class UserController extends AbstractCompanyController
         return $this->view($viewData, [], '@CompanyPage/views/user/user.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     protected function executeIndexAction(Request $request): array
     {
         $criteriaFilterTransfer = $this->createCompanyUserCriteriaFilterTransfer($request);
@@ -348,11 +343,6 @@ class UserController extends AbstractCompanyController
         return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
     public function confirmDeleteAction(Request $request): View
     {
         $viewData = $this->executeConfirmDeleteAction($request);
@@ -397,11 +387,6 @@ class UserController extends AbstractCompanyController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
-     */
     protected function createCompanyUserCriteriaFilterTransfer(Request $request): CompanyUserCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();

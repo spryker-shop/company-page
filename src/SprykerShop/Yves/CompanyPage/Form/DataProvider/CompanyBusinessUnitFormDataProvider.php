@@ -45,12 +45,6 @@ class CompanyBusinessUnitFormDataProvider
      */
     protected $localeClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface $glossaryStorageClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface $localeClient
-     */
     public function __construct(
         CompanyPageToCompanyBusinessUnitClientInterface $businessUnitClient,
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
@@ -63,12 +57,6 @@ class CompanyBusinessUnitFormDataProvider
         $this->localeClient = $localeClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return array
-     */
     public function getData(CompanyUserTransfer $companyUserTransfer, ?int $idCompanyBusinessUnit = null): array
     {
         if ($idCompanyBusinessUnit === null) {
@@ -89,12 +77,6 @@ class CompanyBusinessUnitFormDataProvider
         return $companyBusinessUnitTransfer->modifiedToArray();
     }
 
-    /**
-     * @param int|null $idCompany
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
-     */
     protected function prepareCompanyUnitAddressCriteriaFilterTransfer(
         ?int $idCompany = null,
         ?int $idCompanyBusinessUnit = null
@@ -112,11 +94,6 @@ class CompanyBusinessUnitFormDataProvider
         return $companyUnitAddressCriteriaFilter;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return array
-     */
     protected function getDefaultBusinessUnitData(CompanyUserTransfer $companyUserTransfer): array
     {
         $companyUserTransfer->requireFkCompany();
@@ -181,11 +158,6 @@ class CompanyBusinessUnitFormDataProvider
         return $businessUnits;
     }
 
-    /**
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
     public function getCompanyBusinessUnitCollection(int $idCompany): CompanyBusinessUnitCollectionTransfer
     {
         $criteriaFilterTransfer = $this->createCompanyBusinessUnitCriteriaFilterTransfer($idCompany);
@@ -197,11 +169,6 @@ class CompanyBusinessUnitFormDataProvider
         return $companyBusinessUnitCollection;
     }
 
-    /**
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer
-     */
     protected function createCompanyBusinessUnitCriteriaFilterTransfer(int $idCompany): CompanyBusinessUnitCriteriaFilterTransfer
     {
         return (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($idCompany);
@@ -236,11 +203,6 @@ class CompanyBusinessUnitFormDataProvider
         return $companyUnitAddresses;
     }
 
-    /**
-     * @param string $iso2Code
-     *
-     * @return string
-     */
     protected function getTranslatedCountryNameByIso2Code(string $iso2Code): string
     {
         $translationKey = CompanyUnitAddressFormDataProvider::COUNTRY_GLOSSARY_PREFIX . $iso2Code;
@@ -249,11 +211,6 @@ class CompanyBusinessUnitFormDataProvider
         return $this->glossaryStorageClient->translate($translationKey, $currentLocale);
     }
 
-    /**
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
-     */
     protected function createCompanyUnitAddressCriteriaFilterTransfer(int $idCompany): CompanyUnitAddressCriteriaFilterTransfer
     {
         return (new CompanyUnitAddressCriteriaFilterTransfer())->setIdCompany($idCompany);

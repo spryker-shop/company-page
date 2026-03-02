@@ -18,19 +18,11 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     protected $companyUnitAddressClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     */
     public function __construct(CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient)
     {
         $this->companyUnitAddressClient = $companyUnitAddressClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     public function getDefaultBillingAddress(CompanyUserTransfer $companyUserTransfer): ?CompanyUnitAddressTransfer
     {
         $companyUnitAddressTransfer = $this->createCompanyUnitAddressTransfer($companyUserTransfer);
@@ -42,11 +34,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $this->companyUnitAddressClient->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     protected function createCompanyUnitAddressTransfer(CompanyUserTransfer $companyUserTransfer): CompanyUnitAddressTransfer
     {
         $defaultBillingAddressId = $companyUserTransfer->getCompanyBusinessUnit()->getDefaultBillingAddress();

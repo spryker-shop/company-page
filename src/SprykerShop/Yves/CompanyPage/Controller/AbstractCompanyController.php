@@ -37,9 +37,6 @@ abstract class AbstractCompanyController extends AbstractController
      */
     public const DEFAULT_PAGE = 1;
 
-    /**
-     * @return bool
-     */
     protected function isCompanyActive(): bool
     {
         $companyUser = $this->findCurrentCompanyUserTransfer();
@@ -66,9 +63,6 @@ abstract class AbstractCompanyController extends AbstractController
         return $this->findCurrentCompanyUserTransfer();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
     protected function findCurrentCompanyUserTransfer(): ?CompanyUserTransfer
     {
         $customerTransfer = $this->getFactory()
@@ -112,11 +106,6 @@ abstract class AbstractCompanyController extends AbstractController
         return $filterTransfer;
     }
 
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $responseTransfer
-     *
-     * @return void
-     */
     protected function processResponseMessages(AbstractTransfer $responseTransfer): void
     {
         if ($responseTransfer->offsetExists('messages')) {
@@ -169,11 +158,6 @@ abstract class AbstractCompanyController extends AbstractController
         $this->addErrorMessage($message);
     }
 
-    /**
-     * @param int $idCompany
-     *
-     * @return bool
-     */
     protected function isCurrentCustomerRelatedToCompany(int $idCompany): bool
     {
         $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
@@ -181,11 +165,6 @@ abstract class AbstractCompanyController extends AbstractController
         return ($companyUserTransfer !== null && $companyUserTransfer->getFkCompany() === $idCompany);
     }
 
-    /**
-     * @param int $idCompanyRole
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
     protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer
     {
         $companyRoleTransfer = (new CompanyRoleTransfer())

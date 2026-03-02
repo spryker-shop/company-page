@@ -29,11 +29,6 @@ class BusinessOnBehalfController extends AbstractController
      */
     protected const ERROR_COMPANY_USER_INVALID = 'company_user.business_on_behalf.error.company_user_invalid';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Yves\Kernel\View\View
-     */
     public function selectCompanyUserAction(Request $request): View
     {
         $viewData = $this->executeSelectCompanyUserAction($request);
@@ -41,11 +36,6 @@ class BusinessOnBehalfController extends AbstractController
         return $this->view($viewData, [], '@CompanyPage/views/user-select/user-select.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     protected function executeSelectCompanyUserAction(Request $request): array
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
@@ -73,11 +63,6 @@ class BusinessOnBehalfController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
     protected function isDefaultFieldSelected(Request $request): bool
     {
         $isDefault = false;

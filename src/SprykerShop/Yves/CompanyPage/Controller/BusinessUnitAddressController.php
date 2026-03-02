@@ -187,11 +187,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $companyBusinessUnitAddressForm
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     protected function updateCompanyBusinessUnitAddress(FormInterface $companyBusinessUnitAddressForm): CompanyUnitAddressResponseTransfer
     {
         return $this->getFactory()
@@ -202,11 +197,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer
-     *
-     * @return void
-     */
     protected function addCompanyUnitAddressResponseErrorMessages(CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer): void
     {
         foreach ($companyUnitAddressResponseTransfer->getMessages() as $responseMessageTransfer) {
@@ -228,12 +218,6 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
     }
 
-    /**
-     * @param int $idCompanyUnitAddress
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
     protected function getCompanyBusinessUnitAddressForm(int $idCompanyUnitAddress, int $idCompanyBusinessUnit): FormInterface
     {
         $companyUnitAddressFormDataProvider = $this->getFactory()

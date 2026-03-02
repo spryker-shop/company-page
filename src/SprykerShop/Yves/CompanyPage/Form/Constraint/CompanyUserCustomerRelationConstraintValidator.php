@@ -37,12 +37,6 @@ class CompanyUserCustomerRelationConstraintValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    /**
-     * @param int $idCustomer
-     * @param \SprykerShop\Yves\CompanyPage\Form\Constraint\CompanyUserCustomerRelationConstraint $constraint
-     *
-     * @return bool
-     */
     protected function isValidCustomer(int $idCustomer, CompanyUserCustomerRelationConstraint $constraint): bool
     {
         if (!$idCustomer) {

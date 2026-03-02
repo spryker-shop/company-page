@@ -186,11 +186,6 @@ class CompanyUserStatusController extends AbstractCompanyController
             ->disableCompanyUser($companyUserTransfer);
     }
 
-    /**
-     * @param int $idCompanyUser
-     *
-     * @return bool
-     */
     protected function isCurrentCompanyUser(int $idCompanyUser): bool
     {
         $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();

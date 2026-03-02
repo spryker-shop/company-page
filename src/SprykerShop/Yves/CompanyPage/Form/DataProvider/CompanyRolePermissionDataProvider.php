@@ -17,9 +17,6 @@ class CompanyRolePermissionDataProvider
      */
     protected $companyRoleClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface $companyRoleClient
-     */
     public function __construct(CompanyPageToCompanyRoleClientInterface $companyRoleClient)
     {
         $this->companyRoleClient = $companyRoleClient;
@@ -35,12 +32,6 @@ class CompanyRolePermissionDataProvider
         ];
     }
 
-    /**
-     * @param int $idCompanyRole
-     * @param int $idPermission
-     *
-     * @return \Generated\Shared\Transfer\PermissionTransfer
-     */
     public function getData(int $idCompanyRole, int $idPermission): PermissionTransfer
     {
         $permissionTransfer = (new PermissionTransfer())

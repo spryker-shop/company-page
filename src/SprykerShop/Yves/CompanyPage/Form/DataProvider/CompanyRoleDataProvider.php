@@ -18,20 +18,11 @@ class CompanyRoleDataProvider
      */
     protected $companyRoleClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface $companyRoleClient
-     */
     public function __construct(CompanyPageToCompanyRoleClientInterface $companyRoleClient)
     {
         $this->companyRoleClient = $companyRoleClient;
     }
 
-    /**
-     * @param int $fkCompany
-     * @param int|null $idCompanyRole
-     *
-     * @return array
-     */
     public function getData(int $fkCompany, ?int $idCompanyRole = null): array
     {
         if ($idCompanyRole === null) {

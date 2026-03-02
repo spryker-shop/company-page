@@ -21,20 +21,11 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
      */
     protected $companyUnitMapper;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface $companyUnitMapper
-     */
     public function __construct(CompanyUnitMapperInterface $companyUnitMapper)
     {
         $this->companyUnitMapper = $companyUnitMapper;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function expandWithCompanyUnitAddress(AddressTransfer $addressTransfer, ?CustomerTransfer $customerTransfer): AddressTransfer
     {
         if ($addressTransfer->getIdCompanyUnitAddress() === null) {
@@ -59,11 +50,6 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         return $addressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     protected function convertIdCompanyUnitAddressToInt(AddressTransfer $addressTransfer): AddressTransfer
     {
         $idCompanyUnitAddress = (int)$addressTransfer->getIdCompanyUnitAddress();
@@ -72,12 +58,6 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         return $addressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function prepareCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer, CustomerTransfer $customerTransfer): AddressTransfer
     {
         $addressTransfer = $this->companyUnitMapper
@@ -110,11 +90,6 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         return $companyBusinessUnitAddressCollection->getCompanyUnitAddresses();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
-     */
     protected function findCompanyBusinessUnit(CustomerTransfer $customerTransfer): ?CompanyBusinessUnitTransfer
     {
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
@@ -125,11 +100,6 @@ class CompanyUnitAddressExpander implements CompanyUnitAddressExpanderInterface
         return $companyUserTransfer->getCompanyBusinessUnit();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return string|null
-     */
     protected function getCompanyName(CustomerTransfer $customerTransfer): ?string
     {
         $companyBusinessUnitTransfer = $this->findCompanyBusinessUnit($customerTransfer);

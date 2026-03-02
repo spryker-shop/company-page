@@ -36,12 +36,6 @@ class CompanyUserRelationConstraintValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    /**
-     * @param int $idCompany
-     * @param \SprykerShop\Yves\CompanyPage\Form\Constraint\CompanyUserRelationConstraint $constraint
-     *
-     * @return bool
-     */
     protected function isValidCompanyUser(int $idCompany, CompanyUserRelationConstraint $constraint): bool
     {
         $customerTransfer = $constraint->getCustomerClient()->getCustomer();

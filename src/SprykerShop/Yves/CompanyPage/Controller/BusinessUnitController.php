@@ -295,11 +295,6 @@ class BusinessUnitController extends AbstractCompanyController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer
-     */
     protected function createBusinessUnitCriteriaFilterTransfer(Request $request): CompanyBusinessUnitCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
@@ -357,11 +352,6 @@ class BusinessUnitController extends AbstractCompanyController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
-     */
     protected function createCompanyUnitAddressCriteriaFilterTransfer(
         Request $request
     ): CompanyUnitAddressCriteriaFilterTransfer {
@@ -396,11 +386,6 @@ class BusinessUnitController extends AbstractCompanyController
         return $companyBusinessUnitClient->createCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
-     *
-     * @return void
-     */
     protected function applyErrorMessage(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): void
     {
         foreach ($companyBusinessUnitResponseTransfer->getMessages() as $message) {
@@ -410,11 +395,6 @@ class BusinessUnitController extends AbstractCompanyController
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
-     *
-     * @return void
-     */
     protected function applySuccessMessage(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): void
     {
         foreach ($companyBusinessUnitResponseTransfer->getMessages() as $message) {

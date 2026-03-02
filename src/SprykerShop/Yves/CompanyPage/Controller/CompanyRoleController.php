@@ -105,11 +105,6 @@ class CompanyRoleController extends AbstractCompanyController
         return $this->view($viewData, [], '@CompanyPage/views/role/role.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     protected function executeIndexAction(Request $request): array
     {
         $collectionTransfer = $this->createCriteriaFilterTransfer($request);
@@ -427,11 +422,6 @@ class CompanyRoleController extends AbstractCompanyController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer
-     */
     protected function createCriteriaFilterTransfer(Request $request): CompanyRoleCriteriaFilterTransfer
     {
         $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();

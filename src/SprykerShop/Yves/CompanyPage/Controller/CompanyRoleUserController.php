@@ -52,11 +52,6 @@ class CompanyRoleUserController extends AbstractCompanyController
         return $this->view($viewData, [], '@CompanyPage/views/role-user/role-user.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     protected function executeManageAction(Request $request): array
     {
         return [
@@ -104,11 +99,6 @@ class CompanyRoleUserController extends AbstractCompanyController
         );
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
     protected function isCsrfTokenValid(Request $request): bool
     {
         /** @var string|null $token */

@@ -105,19 +105,11 @@ class CompanyUnitAddressForm extends AbstractType
      */
     protected const VALIDATION_ZIP_CODE_MESSAGE = 'validation.zip_code';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'CompanyUnitAddressForm';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);

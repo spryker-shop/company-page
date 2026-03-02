@@ -53,9 +53,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
      */
     protected $customerClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
-     */
     public function __construct(CompanyPageToCustomerClientInterface $customerClient)
     {
         $this->customerClient = $customerClient;
@@ -86,11 +83,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         return $this->addCompanyBusinessUnitFilterField($companyBusinessUnitValue, $orderListTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
     protected function excludeCustomerReferenceFilterField(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $filterFieldTransfers = new ArrayObject();
@@ -104,12 +96,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         return $orderListTransfer->setFilterFields($filterFieldTransfers);
     }
 
-    /**
-     * @param string $companyBusinessUnitValue
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
     protected function addCompanyBusinessUnitFilterField(
         string $companyBusinessUnitValue,
         OrderListTransfer $orderListTransfer
@@ -121,11 +107,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         return $orderListTransfer->addFilterField($filterFieldTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
     protected function addCompanyFilterField(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
@@ -147,11 +128,6 @@ class OrderSearchFormHandler implements OrderSearchFormHandlerInterface
         return $orderListTransfer->addFilterField($filterFieldTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return string|null
-     */
     protected function extractCompanyUuid(CustomerTransfer $customerTransfer): ?string
     {
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();

@@ -37,11 +37,6 @@ class CompanyUnitAddressFormDataProvider
      */
     protected $storeClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface $storeClient
-     */
     public function __construct(
         CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient,
         CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
@@ -118,9 +113,6 @@ class CompanyUnitAddressFormDataProvider
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getAvailableCountries(): array
     {
         $countries = [];
@@ -132,11 +124,6 @@ class CompanyUnitAddressFormDataProvider
         return $countries;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     protected function setDefaultBillingAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         $companyBusinessUnitTransfer = $this->getCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit());
@@ -148,11 +135,6 @@ class CompanyUnitAddressFormDataProvider
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
     protected function getCompanyBusinessUnit(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())

@@ -56,17 +56,11 @@ class CompanyUserRelationConstraint extends Constraint
      */
     protected CompanyPageToLocaleClientInterface $localeClient;
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
-     */
     public function getCustomerClient(): CompanyPageToCustomerClientInterface
     {
         return $this->customerClient;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         $message = $this->glossaryStorageClient->translate(

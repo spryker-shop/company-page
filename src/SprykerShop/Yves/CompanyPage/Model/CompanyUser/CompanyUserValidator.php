@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 class CompanyUserValidator implements CompanyUserValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return bool
-     */
     public function hasBusinessUnit(?CompanyUserTransfer $companyUserTransfer): bool
     {
         return $companyUserTransfer && $companyUserTransfer->getCompanyBusinessUnit();

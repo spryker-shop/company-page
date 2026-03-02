@@ -83,9 +83,6 @@ class CurrentStoreMultiCurrencyType extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function getCurrentStore(): StoreTransfer
     {
         return $this->getFactory()

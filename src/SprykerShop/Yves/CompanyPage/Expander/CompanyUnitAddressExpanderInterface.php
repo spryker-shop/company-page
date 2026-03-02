@@ -12,11 +12,5 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUnitAddressExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function expandWithCompanyUnitAddress(AddressTransfer $addressTransfer, ?CustomerTransfer $customerTransfer): AddressTransfer;
 }

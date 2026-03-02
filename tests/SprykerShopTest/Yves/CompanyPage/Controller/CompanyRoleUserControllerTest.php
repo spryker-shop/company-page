@@ -32,9 +32,6 @@ class CompanyRoleUserControllerTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testAssignThrowsExceptionOnInvalidCsrfToken(): void
     {
         // Assert
@@ -50,9 +47,6 @@ class CompanyRoleUserControllerTest extends Unit
         $companyRoleUserController->assignAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testUnassignThrowsExceptionOnInvalidCsrfToken(): void
     {
         // Assert
@@ -68,9 +62,6 @@ class CompanyRoleUserControllerTest extends Unit
         $companyRoleUserController->unassignAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testAssignDoesNotThrowExceptionOnValidCsrfToken(): void
     {
         // Arrange
@@ -84,9 +75,6 @@ class CompanyRoleUserControllerTest extends Unit
         $companyRoleUserControllerMock->assignAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testUnassignDoesNotThrowExceptionOnValidCsrfToken(): void
     {
         // Arrange
@@ -100,9 +88,6 @@ class CompanyRoleUserControllerTest extends Unit
         $companyRoleUserControllerMock->unassignAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testAssignThrowsExceptionIfUserIsNotRelated(): void
     {
         // Arrange
@@ -115,11 +100,6 @@ class CompanyRoleUserControllerTest extends Unit
         $companyRoleUserControllerMock->assignAction(new Request());
     }
 
-    /**
-     * @param bool $userIsRelated
-     *
-     * @return \SprykerShop\Yves\CompanyPage\Controller\CompanyRoleUserController
-     */
     public function createCompanyRoleUserControllerMockWithMockedCsrfTokenChecks(bool $userIsRelated = true): CompanyRoleUserController
     {
         $companyRoleUserControllerMock = $this->createPartialMock(

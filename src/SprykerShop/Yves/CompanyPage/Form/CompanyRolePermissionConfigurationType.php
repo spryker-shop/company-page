@@ -36,9 +36,6 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      */
     public const OPTION_CONFIGURATION_SIGNATURE = 'OPTION_CONFIGURATION_SIGNATURE';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'CompanyRolePermissionConfigurationType';
@@ -138,11 +135,6 @@ class CompanyRolePermissionConfigurationType extends AbstractType
         return $fieldTypes[$fieldType];
     }
 
-    /**
-     * @param string $fieldType
-     *
-     * @return array
-     */
     protected function getSymfonyTypeOptionsByFieldType(string $fieldType): array
     {
         $fieldTypeOptions = [

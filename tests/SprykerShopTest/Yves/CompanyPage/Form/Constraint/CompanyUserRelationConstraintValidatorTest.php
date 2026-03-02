@@ -58,9 +58,6 @@ class CompanyUserRelationConstraintValidatorTest extends ConstraintValidatorTest
      */
     protected const TEST_ID_COMPANY_2 = 2;
 
-    /**
-     * @return void
-     */
     public function testValidateShouldThrowAnExceptionWhenIncorrectConstraintProvided(): void
     {
         // Assert
@@ -102,20 +99,11 @@ class CompanyUserRelationConstraintValidatorTest extends ConstraintValidatorTest
         $this->assertValidation($expectedIsValid, $expectedMessage);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\ConstraintValidator
-     */
     protected function createValidator(): ConstraintValidator
     {
         return new CompanyUserRelationConstraintValidator();
     }
 
-    /**
-     * @param bool $expectedIsValid
-     * @param string $expectedMessage
-     *
-     * @return void
-     */
     protected function assertValidation(bool $expectedIsValid, string $expectedMessage): void
     {
         if ($expectedIsValid) {

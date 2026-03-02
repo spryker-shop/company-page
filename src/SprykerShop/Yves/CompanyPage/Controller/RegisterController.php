@@ -114,11 +114,6 @@ class RegisterController extends AbstractController
         return $companyUserTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     *
-     * @return void
-     */
     protected function addSuccessMessages(CompanyResponseTransfer $companyResponseTransfer): void
     {
         if (!$companyResponseTransfer->getMessages()->count()) {

@@ -199,11 +199,6 @@ class CompanyRolePermissionController extends AbstractCompanyController
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer $responseTransfer
-     *
-     * @return void
-     */
     protected function generateMessagesByCompanyRolePermissionResponse(
         CompanyRolePermissionResponseTransfer $responseTransfer
     ): void {
@@ -282,9 +277,6 @@ class CompanyRolePermissionController extends AbstractCompanyController
         return false;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function redirectWithSaveFailedError(): RedirectResponse
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_PERMISSION_SAVE_FAILED);

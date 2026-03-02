@@ -88,19 +88,11 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected const VALIDATION_EMAIL_MESSAGE = 'validation.email';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'companyBusinessUnitForm';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::FIELD_COMPANY_UNIT_ADDRESSES);
@@ -225,17 +217,11 @@ class CompanyBusinessUnitForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Email
-     */
     protected function createEmailConstraint(): Email
     {
         return new Email(['message' => static::VALIDATION_EMAIL_MESSAGE]);

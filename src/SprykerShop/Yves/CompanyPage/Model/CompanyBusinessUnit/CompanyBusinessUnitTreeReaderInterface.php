@@ -9,8 +9,5 @@ namespace SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit;
 
 interface CompanyBusinessUnitTreeReaderInterface
 {
-    /**
-     * @return array
-     */
     public function getCustomerCompanyBusinessUnitTree(): array;
 }

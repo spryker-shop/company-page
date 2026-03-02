@@ -24,17 +24,11 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
         $this->customerClient = $customerClient;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
     public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }
 
-    /**
-     * @return bool
-     */
     public function isLoggedIn(): bool
     {
         return $this->customerClient->isLoggedIn();
@@ -50,21 +44,11 @@ class CompanyPageToCustomerClientBridge implements CompanyPageToCustomerClientIn
         return $this->customerClient->setCustomer($customerTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function getCustomerByEmail(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->customerClient->getCustomerByEmail($customerTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
     public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
     {
         return $this->customerClient->findCustomerById($customerTransfer);

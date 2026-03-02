@@ -29,19 +29,11 @@ class CompanyUserAccountSelectorFormDataProvider
      */
     protected $businessOnBehalfClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface $businessOnBehalfClient
-     */
     public function __construct(CompanyPageToBusinessOnBehalfClientInterface $businessOnBehalfClient)
     {
         $this->businessOnBehalfClient = $businessOnBehalfClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return array
-     */
     public function getData(CustomerTransfer $customerTransfer): array
     {
         return [
@@ -86,11 +78,6 @@ class CompanyUserAccountSelectorFormDataProvider
         return [static::GLOSSARY_KEY_NO_COMPANY => ''] + $companies;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
     protected function isDefaultCompanyUserSelected(CustomerTransfer $customerTransfer): bool
     {
         return $customerTransfer->getCompanyUserTransfer()

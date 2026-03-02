@@ -31,17 +31,11 @@ use Symfony\Component\Form\FormInterface;
 
 class FormFactory extends AbstractFactory
 {
-    /**
-     * @return \Symfony\Component\Form\FormFactoryInterface
-     */
     public function getFormFactory(): FormFactoryInterface
     {
         return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyRegisterForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyRegisterForm::class);
@@ -57,9 +51,6 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(CompanyBusinessUnitForm::class, null, $formOptions);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyBusinessUnitDeleteForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyBusinessUnitDeleteForm::class);
@@ -75,9 +66,6 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(CompanyUnitAddressForm::class, null, $formOptions);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyUnitAddressDeleteForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUnitAddressDeleteForm::class);
@@ -94,9 +82,6 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(CompanyBusinessUnitAddressForm::class, $formData, $formOptions);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyRoleForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyRoleForm::class);
@@ -190,9 +175,6 @@ class FormFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
-     */
     public function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
@@ -233,25 +215,16 @@ class FormFactory extends AbstractFactory
         return $this->getFormFactory()->create(CompanyUserAccountSelectorForm::class, $data, $formOptions);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyRolePermissionAssignForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyRolePermissionAssignForm::class);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getCompanyRolePermissionUnassignForm(): FormInterface
     {
         return $this->getFormFactory()->create(CompanyRolePermissionUnassignForm::class);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider
-     */
     public function createCompanyUserAccountDataProvider(): CompanyUserAccountSelectorFormDataProvider
     {
         return new CompanyUserAccountSelectorFormDataProvider(
@@ -259,57 +232,36 @@ class FormFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
-     */
     public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
-     */
     public function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
-     */
     public function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_ROLE);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface
-     */
     public function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_USER);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface
-     */
     public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface
-     */
     public function getStoreClient(): CompanyPageToStoreClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_STORE);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface
-     */
     public function getLocaleClient(): CompanyPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_LOCALE);

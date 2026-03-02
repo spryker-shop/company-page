@@ -73,11 +73,6 @@ class AddressController extends AbstractCompanyController
         return $this->view($viewData, [], '@CompanyPage/views/address/address.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
     protected function executeIndexAction(Request $request): array
     {
         $companyUnitAddressCollectionTransfer = $this->createCriteriaFilterTransfer($request);
@@ -315,11 +310,6 @@ class AddressController extends AbstractCompanyController
         ], [], '@CompanyPage/views/address-delete-confirmation-page/address-delete-confirmation-page.twig');
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer
-     */
     protected function createCriteriaFilterTransfer(
         Request $request
     ): CompanyUnitAddressCriteriaFilterTransfer {

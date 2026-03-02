@@ -27,41 +27,21 @@ class CompanyPageToBusinessOnBehalfClientBridge implements CompanyPageToBusiness
         $this->businessOnBehalfClient = $businessOnBehalfClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
         return $this->businessOnBehalfClient->findActiveCompanyUsersByCustomerId($customerTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
-     */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->businessOnBehalfClient->setDefaultCompanyUser($companyUserTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
     public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->businessOnBehalfClient->unsetDefaultCompanyUser($customerTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
     public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
     {
         return $this->businessOnBehalfClient->isCompanyUserChangeAllowed($customerTransfer);

@@ -45,9 +45,6 @@ class CompanyRoleForm extends AbstractType
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'CompanyRoleForm';
@@ -132,9 +129,6 @@ class CompanyRoleForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);

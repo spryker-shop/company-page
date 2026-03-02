@@ -43,11 +43,6 @@ class CompanyUserFormDataProvider
      */
     protected $companyRoleClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface $companyUserClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface $companyRoleClient
-     */
     public function __construct(
         CompanyPageToCompanyUserClientInterface $companyUserClient,
         CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
@@ -131,11 +126,6 @@ class CompanyUserFormDataProvider
         ];
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
-     *
-     * @return int|null
-     */
     protected function findDefaultCompanyRoleId(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): ?int
     {
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
@@ -147,11 +137,6 @@ class CompanyUserFormDataProvider
         return null;
     }
 
-    /**
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
-     */
     protected function getCompanyRoleCollectionByIdCompany(int $idCompany): CompanyRoleCollectionTransfer
     {
         $criteriaFilterTransfer = new CompanyRoleCriteriaFilterTransfer();
@@ -160,11 +145,6 @@ class CompanyUserFormDataProvider
         return $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 
-    /**
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
     protected function loadCompanyUserTransfer(int $idCompanyUser): CompanyUserTransfer
     {
         $companyUserTransfer = new CompanyUserTransfer();

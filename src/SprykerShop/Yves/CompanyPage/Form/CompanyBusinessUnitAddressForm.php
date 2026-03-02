@@ -27,9 +27,6 @@ class CompanyBusinessUnitAddressForm extends CompanyUnitAddressForm
      */
     protected const FIELD_LABEL_IS_DEFAULT_BILLING = 'company.account.address.is_default_billing';
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'CompanyBusinessUnitAddressForm';

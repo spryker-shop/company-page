@@ -34,10 +34,6 @@ class CompanyBusinessUnitOrderSearchFormDataProvider
      */
     protected $companyBusinessUnitClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     */
     public function __construct(
         CompanyPageToCustomerClientInterface $customerClient,
         CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient

@@ -195,11 +195,6 @@ class CompanyPageControllerProvider extends AbstractYvesControllerProvider
      */
     protected const ROUTE_COMPANY_BUSINESS_UNIT_ADDRESS_UPDATE = 'company/business-unit/address/update';
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
     protected function defineControllers(Application $app): void
     {
         $this->addCompanyRoutes()

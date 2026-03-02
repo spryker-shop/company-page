@@ -22,9 +22,6 @@ use Symfony\Component\Validator\Validation;
  */
 class CompanyRegisterFormTest extends TypeTestCase
 {
-    /**
-     * @return void
-     */
     public function testCompanyUserFormIsValid(): void
     {
         // Arrange
@@ -39,9 +36,6 @@ class CompanyRegisterFormTest extends TypeTestCase
         $this->assertTrue($this->isFormValid($registerForm));
     }
 
-    /**
-     * @return void
-     */
     public function testFirstNameIsNotValid(): void
     {
         // Arrange
@@ -57,9 +51,6 @@ class CompanyRegisterFormTest extends TypeTestCase
         $this->assertFalse($this->isFormValid($registerForm));
     }
 
-    /**
-     * @return void
-     */
     public function testLastNameIsNotValid(): void
     {
         // Arrange
@@ -104,11 +95,6 @@ class CompanyRegisterFormTest extends TypeTestCase
         ];
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
     protected function isFormValid(FormInterface $form): bool
     {
         foreach ($form as $element) {

@@ -42,11 +42,6 @@ class CompanyUserSaver implements CompanyUserSaverInterface
      */
     protected $businessOnBehalfClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface $messengerClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface $businessOnBehalfClient
-     */
     public function __construct(
         CompanyPageToMessengerClientInterface $messengerClient,
         CompanyPageToCustomerClientInterface $customerClient,
@@ -79,13 +74,6 @@ class CompanyUserSaver implements CompanyUserSaverInterface
         $this->messengerClient->addErrorMessage(static::ERROR_COMPANY_USER_INVALID);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUser
-     * @param string $idCompanyUserSelected
-     * @param bool $isDefault
-     *
-     * @return bool
-     */
     protected function saveSelectedCompanyUser(
         CompanyUserTransfer $companyUser,
         string $idCompanyUserSelected,
@@ -123,12 +111,6 @@ class CompanyUserSaver implements CompanyUserSaverInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
-     *
-     * @return void
-     */
     protected function updateCustomerInSession(CustomerTransfer $customerTransfer, ?CompanyUserTransfer $companyUserTransfer): void
     {
         $updatedCustomerTransfer = (new CustomerTransfer())

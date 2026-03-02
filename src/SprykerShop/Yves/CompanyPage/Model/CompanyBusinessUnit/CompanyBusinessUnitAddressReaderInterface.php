@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyBusinessUnitAddressReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     public function getDefaultBillingAddress(CompanyUserTransfer $companyUserTransfer): ?CompanyUnitAddressTransfer;
 }

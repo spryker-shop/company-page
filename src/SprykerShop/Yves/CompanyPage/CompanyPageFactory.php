@@ -52,17 +52,11 @@ use Symfony\Component\Validator\Constraint;
 
 class CompanyPageFactory extends AbstractFactory
 {
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\FormFactory
-     */
     public function createCompanyPageFormFactory(): FormFactory
     {
         return new FormFactory();
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Expander\CompanyBusinessUnitOrderSearchFormExpanderInterface
-     */
     public function createCompanyBusinessUnitOrderSearchFormExpander(): CompanyBusinessUnitOrderSearchFormExpanderInterface
     {
         return new CompanyBusinessUnitOrderSearchFormExpander(
@@ -70,17 +64,11 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\FormHandler\OrderSearchFormHandlerInterface
-     */
     public function createOrderSearchFormHandler(): OrderSearchFormHandlerInterface
     {
         return new OrderSearchFormHandler($this->getCustomerClient());
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyBusinessUnitOrderSearchFormDataProvider
-     */
     public function createCompanyBusinessUnitOrderSearchFormDataProvider(): CompanyBusinessUnitOrderSearchFormDataProvider
     {
         return new CompanyBusinessUnitOrderSearchFormDataProvider(
@@ -89,105 +77,66 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
-     */
     public function getCsrfTokenManager(): CsrfTokenManagerInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::SERVICE_FORM_CSRF_PROVIDER);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface
-     */
     public function getCustomerClient(): CompanyPageToCustomerClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_CUSTOMER);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToStoreClientInterface
-     */
     public function getStoreClient(): CompanyPageToStoreClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_STORE);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUserClientInterface
-     */
     public function getCompanyUserClient(): CompanyPageToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_USER);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyRoleClientInterface
-     */
     public function getCompanyRoleClient(): CompanyPageToCompanyRoleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_ROLE);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyClientInterface
-     */
     public function getCompanyClient(): CompanyPageToCompanyClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface
-     */
     public function getCompanyBusinessUnitClient(): CompanyPageToCompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
     }
 
-    /**
-     * @return array
-     */
     public function getCompanyOverviewWidgetPlugins(): array
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_COMPANY_OVERVIEW_WIDGETS);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface
-     */
     public function getCompanyUnitAddressClient(): CompanyPageToCompanyUnitAddressClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_COMPANY_UNIT_ADDRESS);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToPermissionClientInterface
-     */
     public function getPermissionClient(): CompanyPageToPermissionClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_PERMISSION);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToBusinessOnBehalfClientInterface
-     */
     public function getBusinessOnBehalfClient(): CompanyPageToBusinessOnBehalfClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_BUSINESS_ON_BEHALF);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToMessengerClientInterface
-     */
     public function getMessengerClient(): CompanyPageToMessengerClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_MESSENGER);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserSaverInterface
-     */
     public function createCompanyUserSaver(): CompanyUserSaverInterface
     {
         return new CompanyUserSaver(
@@ -197,9 +146,6 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitTreeReaderInterface
-     */
     public function createCompanyBusinessUnitTreeBuilder(): CompanyBusinessUnitTreeReaderInterface
     {
         return new CompanyBusinessUnitTreeReader(
@@ -208,17 +154,11 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToGlossaryStorageClientInterface
-     */
     public function getGlossaryStorageClient(): CompanyPageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Yves\Router\Router\ChainRouter
-     */
     public function getRouter(): ChainRouter
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::SERVICE_ROUTER);
@@ -234,9 +174,6 @@ class CompanyPageFactory extends AbstractFactory
         return $this->getProvidedDependency(CompanyPageDependencyProvider::PLUGIN_APPLICATION);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressSaverInterface
-     */
     public function createCompanyBusinessAddressSaver(): CompanyBusinessUnitAddressSaverInterface
     {
         return new CompanyBusinessUnitAddressSaver(
@@ -244,9 +181,6 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyBusinessUnit\CompanyBusinessUnitAddressReaderInterface
-     */
     public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
         return new CompanyBusinessUnitAddressReader(
@@ -254,49 +188,31 @@ class CompanyPageFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Model\CompanyUser\CompanyUserValidatorInterface
-     */
     public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
         return new CompanyUserValidator();
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Mapper\CompanyUnitMapperInterface
-     */
     public function createCompanyUnitMapper(): CompanyUnitMapperInterface
     {
         return new CompanyUnitMapper();
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Expander\CompanyUnitAddressExpanderInterface
-     */
     public function createCompanyUnitAddressExpander(): CompanyUnitAddressExpanderInterface
     {
         return new CompanyUnitAddressExpander($this->createCompanyUnitMapper());
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Form\Cloner\FormCloner
-     */
     public function createFormCloner(): FormCloner
     {
         return new FormCloner();
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\CustomerChecker\PreAuthUserCheckerInterface
-     */
     public function createPreAuthUserChecker(): PreAuthUserCheckerInterface
     {
         return new PreAuthUserChecker();
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
     public function createCompanyUserRelationConstraint(): Constraint
     {
         return new CompanyUserRelationConstraint([
@@ -306,9 +222,6 @@ class CompanyPageFactory extends AbstractFactory
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
     public function createCompanyUserCustomerRelationConstraint(): Constraint
     {
         return new CompanyUserCustomerRelationConstraint([
@@ -318,9 +231,6 @@ class CompanyPageFactory extends AbstractFactory
         ]);
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToLocaleClientInterface
-     */
     public function getLocaleClient(): CompanyPageToLocaleClientInterface
     {
         return $this->getProvidedDependency(CompanyPageDependencyProvider::CLIENT_LOCALE);

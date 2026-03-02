@@ -33,9 +33,6 @@ class CompanyRolePermissionControllerTest extends Unit
      */
     protected CompanyPageTester $tester;
 
-    /**
-     * @return void
-     */
     public function testConfigureActionThrowsExceptionOnOpenIfCustomerNotRelatedToCompany(): void
     {
         // Assert
@@ -52,9 +49,6 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController->configureAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testConfigureActionDoesNotThrowExceptionOnOpenIfCustomerRelatedToCompany(): void
     {
         // Arrange
@@ -72,9 +66,6 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController->configureAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testConfigureActionThrowsExceptionOnFormSubmissionIfCustomerNotRelatedToCompany(): void
     {
         // Assert
@@ -92,9 +83,6 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController->configureAction(new Request());
     }
 
-    /**
-     * @return void
-     */
     public function testConfigureActionDoesNotThrowExceptionOnFormSubmissionIfCustomerRelatedToCompany(): void
     {
         // Arrange
@@ -109,9 +97,6 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController->configureAction(new Request());
     }
 
-    /**
-     * @return \SprykerShop\Yves\CompanyPage\Controller\CompanyRolePermissionController
-     */
     protected function createCompanyRolePemissionControllerMockWithMockedForm(): CompanyRolePermissionController
     {
         $companyRolePemissionControllerMock = $this->createPartialMock(CompanyRolePermissionController::class, ['isCurrentCustomerRelatedToCompany', 'getFactory', 'generateMessagesByCompanyRolePermissionResponse']);

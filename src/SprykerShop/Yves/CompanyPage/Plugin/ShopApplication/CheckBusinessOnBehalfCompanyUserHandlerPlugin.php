@@ -61,11 +61,6 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
         }
     }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
-     *
-     * @return bool
-     */
     protected function isCompanyControllerRequested(ControllerEvent $event): bool
     {
         $eventController = $event->getController();
@@ -78,9 +73,6 @@ class CheckBusinessOnBehalfCompanyUserHandlerPlugin extends AbstractPlugin imple
         return $controllerInstance instanceof AbstractCompanyController;
     }
 
-    /**
-     * @return \Spryker\Yves\Router\Router\ChainRouter
-     */
     protected function getRouter(): ChainRouter
     {
         return $this->getFactory()->getRouter();

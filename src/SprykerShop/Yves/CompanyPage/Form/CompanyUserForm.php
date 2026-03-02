@@ -115,11 +115,6 @@ class CompanyUserForm extends AbstractType
      */
     protected const VALIDATION_NOT_BLANK_MESSAGE = 'validation.not_blank';
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_BUSINESS_UNIT_CHOICES);
@@ -127,9 +122,6 @@ class CompanyUserForm extends AbstractType
         $resolver->setDefined(static::OPTION_DEFAULT_COMPANY_ROLE_ID);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'companyUserForm';
@@ -339,11 +331,6 @@ class CompanyUserForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
     protected function addIsGuestTransformer(FormBuilderInterface $builder): void
     {
         $builder->get(static::FIELD_IS_GUEST)->addModelTransformer(new CallbackTransformer(
@@ -384,9 +371,6 @@ class CompanyUserForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return \Closure
-     */
     protected function getInputDataCallbackRoleCollectionTransformer(): Closure
     {
         return function (?array $roleCollection = []): array {
@@ -402,9 +386,6 @@ class CompanyUserForm extends AbstractType
         };
     }
 
-    /**
-     * @return \Closure
-     */
     protected function getOutputDataCallbackRoleCollectionTransformer(): Closure
     {
         return function (?array $roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
@@ -421,9 +402,6 @@ class CompanyUserForm extends AbstractType
         };
     }
 
-    /**
-     * @return array
-     */
     protected function createCompanyRoleCollectionConstraints(): array
     {
         $companyRoleCollectionConstraints = [];
@@ -439,17 +417,11 @@ class CompanyUserForm extends AbstractType
         return $companyRoleCollectionConstraints;
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
     protected function createFirstNameRegexConstraint(): Regex
     {
         return new Regex([
@@ -457,9 +429,6 @@ class CompanyUserForm extends AbstractType
         ]);
     }
 
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Regex
-     */
     protected function createLastNameRegexConstraint(): Regex
     {
         return new Regex([

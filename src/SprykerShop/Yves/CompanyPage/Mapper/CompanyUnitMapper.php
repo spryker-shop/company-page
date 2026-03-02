@@ -13,12 +13,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 class CompanyUnitMapper implements CompanyUnitMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function mapCompanyUnitAddressTransferToAddressTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         AddressTransfer $addressTransfer
@@ -26,12 +20,6 @@ class CompanyUnitMapper implements CompanyUnitMapperInterface
         return $addressTransfer->fromArray($companyUnitAddressTransfer->modifiedToArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function mapCustomerDataToAddressTransfer(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer

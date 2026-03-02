@@ -19,9 +19,6 @@ class CompanyBusinessUnitAddressSaver implements CompanyBusinessUnitAddressSaver
      */
     protected $companyUnitAddressClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient
-     */
     public function __construct(CompanyPageToCompanyUnitAddressClientInterface $companyUnitAddressClient)
     {
         $this->companyUnitAddressClient = $companyUnitAddressClient;
@@ -42,11 +39,6 @@ class CompanyBusinessUnitAddressSaver implements CompanyBusinessUnitAddressSaver
         return $addressTransfer->getCompanyUnitAddressTransfer();
     }
 
-    /**
-     * @param int|null $idBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
     protected function createCompanyBusinessUnitCollectionTransfer(?int $idBusinessUnit = null): CompanyBusinessUnitCollectionTransfer
     {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();

@@ -60,11 +60,6 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
         return $this->getRouter()->generate(static::COMPANY_REDIRECT_ROUTE);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
     protected function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool
     {
         return $this->getFactory()
@@ -72,9 +67,6 @@ class BusinessOnBehalfCompanyUserRedirectAfterLoginStrategyPlugin extends Abstra
             ->isCompanyUserChangeAllowed($customerTransfer);
     }
 
-    /**
-     * @return \Spryker\Yves\Router\Router\ChainRouter
-     */
     protected function getRouter(): ChainRouter
     {
         return $this->getFactory()->getRouter();

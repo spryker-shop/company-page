@@ -13,23 +13,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUnitMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function mapCompanyUnitAddressTransferToAddressTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         AddressTransfer $addressTransfer
     ): AddressTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
     public function mapCustomerDataToAddressTransfer(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer

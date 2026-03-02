@@ -33,10 +33,6 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
      */
     protected $companyBusinessUnitClient;
 
-    /**
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCustomerClientInterface $customerClient
-     * @param \SprykerShop\Yves\CompanyPage\Dependency\Client\CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     */
     public function __construct(
         CompanyPageToCustomerClientInterface $customerClient,
         CompanyPageToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
@@ -45,9 +41,6 @@ class CompanyBusinessUnitTreeReader implements CompanyBusinessUnitTreeReaderInte
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
     }
 
-    /**
-     * @return array
-     */
     public function getCustomerCompanyBusinessUnitTree(): array
     {
         $customerTransfer = $this->customerClient->getCustomer();
