@@ -22,12 +22,10 @@ class CompanyUserStatusChangePermissionPlugin implements PermissionPluginInterfa
     public const KEY = 'CompanyUserStatusChangePermissionPlugin';
 
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Returns plugin name as key to permission manage for enable / disable status of company users.
      *
      * @api
-     *
-     * @return string
      */
     public function getKey(): string
     {
