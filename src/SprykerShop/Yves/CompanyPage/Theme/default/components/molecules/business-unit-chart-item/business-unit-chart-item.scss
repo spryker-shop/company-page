@@ -1,13 +1,20 @@
+@use 'sass:meta';
+@use 'sass:map';
+
 @mixin company-page-business-unit-chart-item($name: '.business-unit-chart-item') {
     #{$name} {
+        @if meta.mixin-exists(company-page-business-unit-chart-item-base-hook) {
+            @include company-page-business-unit-chart-item-base-hook;
+        }
+
         & & {
-            padding-left: map-get($setting-spacing, 'big');
+            padding-left: map.get($setting-spacing, 'big');
         }
 
         &__link {
             display: block;
-            padding: map-get($setting-spacing, 'default');
-            margin-bottom: map-get($setting-spacing, 'default');
+            padding: map.get($setting-spacing, 'default');
+            margin-bottom: map.get($setting-spacing, 'default');
             background: $setting-color-lightest;
             color: $setting-color-darkest;
             border-radius: 4px;
@@ -24,6 +31,10 @@
     @include company-page-business-unit-chart-item();
 
     #{$name} {
+        @if meta.mixin-exists(business-unit-chart-item-base-hook) {
+            @include business-unit-chart-item-base-hook;
+        }
+
         @content;
     }
 }

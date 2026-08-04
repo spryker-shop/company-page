@@ -1,7 +1,14 @@
+@use 'sass:meta';
+@use 'sass:map';
+
 @mixin company-page-business-unit-delete-message($name: '.business-unit-delete-message') {
     #{$name} {
+        @if meta.mixin-exists(company-page-business-unit-delete-message-base-hook) {
+            @include company-page-business-unit-delete-message-base-hook;
+        }
+
         &__delete-message {
-            color: map-get($setting-color-actions, 'alert');
+            color: map.get($setting-color-actions, 'alert');
         }
 
         &__business-unit {
@@ -9,7 +16,7 @@
         }
 
         &__action {
-            margin-right: map-get($setting-spacing, 'default');
+            margin-right: map.get($setting-spacing, 'default');
         }
 
         @content;

@@ -1,7 +1,14 @@
+@use 'sass:meta';
+@use 'sass:map';
+
 @mixin company-page-address-delete-message($name: '.address-delete-message') {
     #{$name} {
+        @if meta.mixin-exists(company-page-address-delete-message-base-hook) {
+            @include company-page-address-delete-message-base-hook;
+        }
+
         &__delete-title {
-            color: map-get($setting-color-actions, alert);
+            color: map.get($setting-color-actions, alert);
         }
 
         &__delete-message {
@@ -13,7 +20,7 @@
         }
 
         &__action {
-            margin-right: map-get($setting-spacing, 'default');
+            margin-right: map.get($setting-spacing, 'default');
         }
 
         @content;

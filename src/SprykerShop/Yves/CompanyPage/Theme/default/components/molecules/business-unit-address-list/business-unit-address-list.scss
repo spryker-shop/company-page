@@ -1,5 +1,11 @@
+@use 'sass:meta';
+
 @mixin company-page-business-unit-address-list($name: '.business-unit-address-list') {
     #{$name} {
+        @if meta.mixin-exists(company-page-business-unit-address-list-base-hook) {
+            @include company-page-business-unit-address-list-base-hook;
+        }
+
         &__list {
             max-height: 15rem;
             overflow-y: auto;
