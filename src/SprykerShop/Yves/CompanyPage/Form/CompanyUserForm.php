@@ -406,13 +406,13 @@ class CompanyUserForm extends AbstractType
     {
         $companyRoleCollectionConstraints = [];
 
-        $companyRoleCollectionConstraints[] = new Callback([
-            'callback' => function (CompanyRoleCollectionTransfer $companyRoleCollectionTransfer, ExecutionContextInterface $context) {
+        $companyRoleCollectionConstraints[] = new Callback(
+            callback: function (CompanyRoleCollectionTransfer $companyRoleCollectionTransfer, ExecutionContextInterface $context) {
                 if (!$companyRoleCollectionTransfer->getRoles()->count()) {
                     $context->addViolation('company.account.company_user.assign_roles.empty_roles.error');
                 }
             },
-        ]);
+        );
 
         return $companyRoleCollectionConstraints;
     }

@@ -120,6 +120,12 @@ class CompanyRolePermissionConfigurationType extends AbstractType
      *
      * @return string
      */
+
+    /**
+     * @throws \Exception
+     *
+     * @return class-string<\Symfony\Component\Form\FormTypeInterface>
+     */
     protected function getSymfonyTypeByFieldType(string $fieldType)
     {
         $fieldTypes = [

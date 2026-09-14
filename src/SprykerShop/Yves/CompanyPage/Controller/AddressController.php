@@ -122,7 +122,7 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyBusinessUnit = (int)$request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT, 0);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData($dataProvider->getData($this->findCurrentCompanyUserTransfer()));
@@ -191,8 +191,8 @@ class AddressController extends AbstractCompanyController
             ->getCompanyUnitAddressForm($dataProvider->getOptions())
             ->handleRequest($request);
 
-        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = (int)$request->query->get(static::REQUEST_PARAM_ID, 0);
+        $idCompanyBusinessUnit = (int)$request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT, 0);
 
         if ($addressForm->isSubmitted() === false) {
             $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyUnitAddress);
@@ -250,8 +250,8 @@ class AddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
-        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = (int)$request->query->get(static::REQUEST_PARAM_ID, 0);
+        $idCompanyBusinessUnit = (int)$request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT, 0);
         $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
@@ -285,8 +285,8 @@ class AddressController extends AbstractCompanyController
      */
     public function confirmDeleteAction(Request $request)
     {
-        $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
+        $idCompanyUnitAddress = (int)$request->query->get(static::REQUEST_PARAM_ID, 0);
+        $idCompanyBusinessUnit = (int)$request->query->get(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT, 0);
 
         $referer = $request->headers->get(static::REFERER_PARAM);
 
