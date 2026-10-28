@@ -63,8 +63,14 @@ class CompanyBusinessUnitFormDataProvider
             return $this->getDefaultBusinessUnitData($companyUserTransfer);
         }
 
-        $companyBusinessUnitTransfer = $this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+        return $this->mapCompanyBusinessUnitTransferToFormData($this->loadCompanyBusinessUnitTransfer($idCompanyBusinessUnit));
+    }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function mapCompanyBusinessUnitTransferToFormData(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
+    {
         $addressCollection = $this->companyUnitAddressClient->getCompanyUnitAddressCollection(
             $this->prepareCompanyUnitAddressCriteriaFilterTransfer(
                 $companyBusinessUnitTransfer->getFkCompany(),

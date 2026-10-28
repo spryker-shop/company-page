@@ -190,11 +190,7 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     protected function assertCurrentCustomerCanEditRole(int $idCompanyRole): void
     {
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole));
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($this->findCompanyRoleForCurrentCompany($idCompanyRole) === null) {
             throw new NotFoundHttpException();
         }
     }
@@ -221,14 +217,9 @@ class CompanyRolePermissionController extends AbstractCompanyController
      */
     protected function saveCompanyRolePermissions(int $idCompanyRole, $permissions): void
     {
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($idCompanyRole);
 
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($companyRoleTransfer === null) {
             throw new NotFoundHttpException();
         }
 

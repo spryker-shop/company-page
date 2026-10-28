@@ -232,41 +232,36 @@ class UserController extends AbstractCompanyController
      */
     protected function executeUpdateAction(Request $request)
     {
+        $idCompanyUser = $request->query->getInt('id');
+        $idCompany = $this->findCurrentCompanyUserTransfer()->getFkCompany();
+
         $dataProvider = $this->getFactory()
             ->createCompanyPageFormFactory()
             ->createCompanyUserFormDataProvider();
 
         $companyUserForm = $this->getFactory()
             ->createCompanyPageFormFactory()
-            ->getCompanyUserForm(
-                $dataProvider->getOptions(
-                    $this->findCurrentCompanyUserTransfer()->getFkCompany(),
-                ),
-            )
+            ->getCompanyUserForm($dataProvider->getOptions($idCompany))
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() === false) {
-            $idCompanyUser = $request->query->getInt('id');
-            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer()->getFkCompany(), $idCompanyUser);
+            $companyUserTransfer = $this->findCompanyUserForCurrentCompany($idCompanyUser);
 
-            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])) {
+            if ($companyUserTransfer === null) {
                 throw new NotFoundHttpException();
             }
 
-            $companyUserForm->setData($data);
+            $companyUserForm->setData($dataProvider->mapCompanyUserTransferToFormData($companyUserTransfer));
         }
 
         if ($companyUserForm->isSubmitted() === true && $companyUserForm->isValid() === true) {
-            $data = $companyUserForm->getData();
+            $trustedCompanyUserTransfer = $this->findCompanyUserForCurrentCompany($idCompanyUser);
 
-            if (
-                !$this->isCustomerIdNotEmpty($data)
-                || !$this->isCurrentCustomerRelatedToCompany($data[CompanyUserForm::FIELD_FK_COMPANY])
-            ) {
+            if ($trustedCompanyUserTransfer === null) {
                 throw new NotFoundHttpException();
             }
 
-            $companyUserResponseTransfer = $this->updateCompanyUser($data);
+            $companyUserResponseTransfer = $this->updateCompanyUser($companyUserForm->getData(), $trustedCompanyUserTransfer);
 
             if ($companyUserResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_USER_UPDATE);
@@ -320,11 +315,9 @@ class UserController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_USER);
         }
 
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserById($submittedCompanyUserTransfer);
+        $companyUserTransfer = $this->findCompanyUserForCurrentCompany((int)$submittedCompanyUserTransfer->getIdCompanyUser());
 
-        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+        if ($companyUserTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -361,15 +354,9 @@ class UserController extends AbstractCompanyController
     {
         $idCompanyUser = $request->query->getInt('id');
 
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($idCompanyUser);
+        $companyUserTransfer = $this->findCompanyUserForCurrentCompany($idCompanyUser);
 
-        $companyUserTransfer->requireIdCompanyUser();
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserById($companyUserTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+        if ($companyUserTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -408,11 +395,13 @@ class UserController extends AbstractCompanyController
      */
     protected function createCompanyUser(array $data): CompanyUserResponseTransfer
     {
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->fromArray($data, true);
+        $data = $this->removeIdentityKeys($data);
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($data, true);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->fromArray($data, true)
+            ->setFkCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
+
+        $customerTransfer = (new CustomerTransfer())->fromArray($data, true);
         $customerTransfer->setSendPasswordToken(true);
 
         $companyUserTransfer->setCustomer($customerTransfer);
@@ -422,16 +411,23 @@ class UserController extends AbstractCompanyController
 
     /**
      * @param array<string, mixed> $data
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $trustedCompanyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function updateCompanyUser(array $data): CompanyUserResponseTransfer
+    protected function updateCompanyUser(array $data, CompanyUserTransfer $trustedCompanyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyUserTransfer = new CompanyUserTransfer();
-        $companyUserTransfer->fromArray($data, true);
+        $data = $this->removeIdentityKeys($data);
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($data, true);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->fromArray($data, true)
+            ->setIdCompanyUser($trustedCompanyUserTransfer->getIdCompanyUser())
+            ->setFkCompany($trustedCompanyUserTransfer->getFkCompany())
+            ->setFkCustomer($trustedCompanyUserTransfer->getFkCustomer());
+
+        $customerTransfer = (new CustomerTransfer())
+            ->fromArray($data, true)
+            ->setIdCustomer($trustedCompanyUserTransfer->getFkCustomer());
 
         $companyUserTransfer->setCustomer($customerTransfer);
 
@@ -441,11 +437,16 @@ class UserController extends AbstractCompanyController
     /**
      * @param array<string, mixed> $data
      *
-     * @return bool
+     * @return array<string, mixed>
      */
-    protected function isCustomerIdNotEmpty(array $data): bool
+    protected function removeIdentityKeys(array $data): array
     {
-        return isset($data[CompanyUserForm::FIELD_ID_CUSTOMER])
-            && $data[CompanyUserForm::FIELD_ID_CUSTOMER];
+        unset(
+            $data[CompanyUserForm::FIELD_ID_COMPANY_USER],
+            $data[CompanyUserForm::FIELD_ID_CUSTOMER],
+            $data[CompanyUserForm::FIELD_FK_CUSTOMER],
+        );
+
+        return $data;
     }
 }

@@ -7,8 +7,12 @@
 
 namespace SprykerShop\Yves\CompanyPage\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -173,5 +177,75 @@ abstract class AbstractCompanyController extends AbstractController
         return $this->getFactory()
             ->getCompanyRoleClient()
             ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
+    }
+
+    protected function findCompanyRoleForCurrentCompany(int $idCompanyRole): ?CompanyRoleTransfer
+    {
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+
+        if ($idCompanyRole < 1 || $currentCompanyUserTransfer === null || !$currentCompanyUserTransfer->getFkCompany()) {
+            return null;
+        }
+
+        $companyRoleTransfers = $this->getFactory()
+            ->getCompanyRoleClient()
+            ->getCompanyRoleCollection((new CompanyRoleCriteriaFilterTransfer())->setIdCompany($currentCompanyUserTransfer->getFkCompany()))
+            ->getRoles();
+
+        foreach ($companyRoleTransfers as $companyRoleTransfer) {
+            if ($companyRoleTransfer->getIdCompanyRole() === $idCompanyRole) {
+                return $companyRoleTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    protected function findCompanyUserForCurrentCompany(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+
+        if ($idCompanyUser < 1 || $currentCompanyUserTransfer === null || !$currentCompanyUserTransfer->getFkCompany()) {
+            return null;
+        }
+
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
+            ->setIdCompany($currentCompanyUserTransfer->getFkCompany())
+            ->setCompanyUserIds([$idCompanyUser]);
+
+        $companyUserTransfers = $this->getFactory()
+            ->getCompanyUserClient()
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers();
+
+        if ($companyUserTransfers->count() === 0) {
+            return null;
+        }
+
+        return $companyUserTransfers->getIterator()->current();
+    }
+
+    protected function findCompanyBusinessUnitForCurrentCompany(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
+    {
+        $currentCompanyUserTransfer = $this->findCurrentCompanyUserTransfer();
+
+        if ($idCompanyBusinessUnit < 1 || $currentCompanyUserTransfer === null || !$currentCompanyUserTransfer->getFkCompany()) {
+            return null;
+        }
+
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($currentCompanyUserTransfer->getFkCompany())
+            ->setCompanyBusinessUnitIds([$idCompanyBusinessUnit]);
+
+        $companyBusinessUnitTransfers = $this->getFactory()
+            ->getCompanyBusinessUnitClient()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
+            ->getCompanyBusinessUnits();
+
+        if ($companyBusinessUnitTransfers->count() === 0) {
+            return null;
+        }
+
+        return $companyBusinessUnitTransfers->getIterator()->current();
     }
 }

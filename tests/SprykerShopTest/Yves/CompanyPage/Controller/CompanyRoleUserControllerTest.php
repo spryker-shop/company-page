@@ -104,19 +104,15 @@ class CompanyRoleUserControllerTest extends Unit
     {
         $companyRoleUserControllerMock = $this->createPartialMock(
             CompanyRoleUserController::class,
-            ['isCsrfTokenValid', 'getFactory', 'isCurrentCustomerRelatedToCompany', 'saveCompanyUser', 'redirectResponseInternal'],
+            ['isCsrfTokenValid', 'getFactory', 'findCompanyRoleForCurrentCompany', 'saveCompanyUser', 'redirectResponseInternal'],
         );
 
         $factoryMock = $this->createPartialMock(CompanyPageFactory::class, ['getCompanyRoleClient']);
 
         $clientMock = $this->getMockBuilder(CompanyPageToCompanyRoleClientBridge::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getCompanyRoleById', 'getCompanyRoleCollection'])
+            ->onlyMethods(['getCompanyRoleCollection'])
             ->getMock();
-
-        $clientMock
-            ->method('getCompanyRoleById')
-            ->willReturn((new CompanyRoleTransfer())->setFkCompany(0));
 
         $clientMock
             ->method('getCompanyRoleCollection')
@@ -127,8 +123,8 @@ class CompanyRoleUserControllerTest extends Unit
             ->willReturn($clientMock);
 
         $companyRoleUserControllerMock
-            ->method('isCurrentCustomerRelatedToCompany')
-            ->willReturn($userIsRelated);
+            ->method('findCompanyRoleForCurrentCompany')
+            ->willReturn($userIsRelated ? new CompanyRoleTransfer() : null);
 
         $companyRoleUserControllerMock
             ->method('saveCompanyUser');

@@ -164,19 +164,16 @@ class CompanyRoleUserController extends AbstractCompanyController
     {
         $idCompanyRole = $request->query->getInt('id');
 
-        $companyRoleUserList = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById((new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole))
-            ->getCompanyUserCollection()
-            ->getCompanyUsers();
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($idCompanyRole);
+
+        if ($companyRoleTransfer === null) {
+            throw new NotFoundHttpException();
+        }
+
+        $companyRoleUserList = $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers();
 
         if ($companyRoleUserList->count() === 0) {
             return [];
-        }
-
-        $idCompany = $companyRoleUserList->offsetGet(0)->getFkCompanyOrFail();
-        if (!$this->isCurrentCustomerRelatedToCompany($idCompany)) {
-            throw new NotFoundHttpException();
         }
 
         $companyUserList = $this->getFactory()
@@ -215,11 +212,7 @@ class CompanyRoleUserController extends AbstractCompanyController
      */
     protected function saveCompanyUser(int $idCompanyUser, ArrayObject $companyRoles): void
     {
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserClient()
-            ->getCompanyUserById((new CompanyUserTransfer())->setIdCompanyUser($idCompanyUser));
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyUserTransfer->getFkCompany())) {
+        if ($this->findCompanyUserForCurrentCompany($idCompanyUser) === null) {
             throw new NotFoundHttpException();
         }
 
@@ -244,12 +237,7 @@ class CompanyRoleUserController extends AbstractCompanyController
      */
     protected function assertCompanyRoleIsRelatedToCurrentUser(int $idCompanyRole): void
     {
-        $companyRoleTransfer = (new CompanyRoleTransfer())->setIdCompanyRole($idCompanyRole);
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompanyOrFail())) {
+        if ($this->findCompanyRoleForCurrentCompany($idCompanyRole) === null) {
             throw new NotFoundHttpException();
         }
     }

@@ -42,8 +42,8 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController = $this->createCompanyRolePemissionControllerMockWithMockedForm();
 
         $companyRolePemissionController
-            ->method('isCurrentCustomerRelatedToCompany')
-            ->willReturn(false);
+            ->method('findCompanyRoleForCurrentCompany')
+            ->willReturn(null);
 
         // Act
         $companyRolePemissionController->configureAction(new Request());
@@ -55,8 +55,8 @@ class CompanyRolePermissionControllerTest extends Unit
         $companyRolePemissionController = $this->createCompanyRolePemissionControllerMockWithMockedForm();
 
         $companyRolePemissionController
-            ->method('isCurrentCustomerRelatedToCompany')
-            ->willReturn(true);
+            ->method('findCompanyRoleForCurrentCompany')
+            ->willReturn(new CompanyRoleTransfer());
 
         // Assert
         $companyRolePemissionController->expects($this->once())
@@ -76,8 +76,8 @@ class CompanyRolePermissionControllerTest extends Unit
 
         // Assert
         $companyRolePemissionController->expects($this->atLeast(2))
-            ->method('isCurrentCustomerRelatedToCompany')
-            ->willReturnOnConsecutiveCalls(true, false);
+            ->method('findCompanyRoleForCurrentCompany')
+            ->willReturnOnConsecutiveCalls(new CompanyRoleTransfer(), null);
 
         // Act
         $companyRolePemissionController->configureAction(new Request());
@@ -90,8 +90,8 @@ class CompanyRolePermissionControllerTest extends Unit
 
         // Assert
         $companyRolePemissionController->expects($this->atLeast(2))
-            ->method('isCurrentCustomerRelatedToCompany')
-            ->willReturnOnConsecutiveCalls(true, true);
+            ->method('findCompanyRoleForCurrentCompany')
+            ->willReturnOnConsecutiveCalls(new CompanyRoleTransfer(), new CompanyRoleTransfer());
 
         // Act
         $companyRolePemissionController->configureAction(new Request());
@@ -99,24 +99,14 @@ class CompanyRolePermissionControllerTest extends Unit
 
     protected function createCompanyRolePemissionControllerMockWithMockedForm(): CompanyRolePermissionController
     {
-        $companyRolePemissionControllerMock = $this->createPartialMock(CompanyRolePermissionController::class, ['isCurrentCustomerRelatedToCompany', 'getFactory', 'generateMessagesByCompanyRolePermissionResponse']);
+        $companyRolePemissionControllerMock = $this->createPartialMock(CompanyRolePermissionController::class, ['findCompanyRoleForCurrentCompany', 'getFactory', 'generateMessagesByCompanyRolePermissionResponse']);
 
         $factoryMock = $this->createPartialMock(CompanyPageFactory::class, ['getCompanyRoleClient', 'createCompanyPageFormFactory']);
 
         $clientMock = $this->getMockBuilder(CompanyPageToCompanyRoleClientBridge::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getCompanyRoleById', 'updateCompanyRolePermission'])
+            ->onlyMethods(['updateCompanyRolePermission'])
             ->getMock();
-
-        $companyRoleTransfer = new CompanyRoleTransfer();
-
-        $companyRoleTransfer
-            ->setFkCompany(0)
-            ->setIdCompanyRole(0);
-
-        $clientMock
-            ->method('getCompanyRoleById')
-            ->willReturn($companyRoleTransfer);
 
         $factoryMock
             ->method('getCompanyRoleClient')

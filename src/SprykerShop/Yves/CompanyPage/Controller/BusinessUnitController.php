@@ -173,21 +173,21 @@ class BusinessUnitController extends AbstractCompanyController
             ->handleRequest($request);
 
         if ($companyBusinessUnitForm->isSubmitted() === false) {
-            $data = $dataProvider->getData($this->findCurrentCompanyUserTransfer(), $idCompanyBusinessUnit);
+            $companyBusinessUnitTransfer = $this->findCompanyBusinessUnitForCurrentCompany($idCompanyBusinessUnit);
 
-            $companyBusinessUnitTransfer = $this->getFactory()
-                ->getCompanyBusinessUnitClient()
-                ->getCompanyBusinessUnitById((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
-
-            if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+            if ($companyBusinessUnitTransfer === null) {
                 throw new NotFoundHttpException();
             }
 
-            $companyBusinessUnitForm->setData($data);
+            $companyBusinessUnitForm->setData($dataProvider->mapCompanyBusinessUnitTransferToFormData($companyBusinessUnitTransfer));
         }
 
         if ($companyBusinessUnitForm->isSubmitted() === true && $companyBusinessUnitForm->isValid() === true) {
-            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData());
+            if ($this->findCompanyBusinessUnitForCurrentCompany($idCompanyBusinessUnit) === null) {
+                throw new NotFoundHttpException();
+            }
+
+            $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitSave($companyBusinessUnitForm->getData(), $idCompanyBusinessUnit);
 
             if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
                 $this->applySuccessMessage($companyBusinessUnitResponseTransfer);
@@ -225,15 +225,9 @@ class BusinessUnitController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
-        $companyBusinessUnitId = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyBusinessUnitId);
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnitForCurrentCompany($request->query->getInt(static::REQUEST_PARAM_ID));
 
-        $companyBusinessUnitTransfer = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+        if ($companyBusinessUnitTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -278,14 +272,10 @@ class BusinessUnitController extends AbstractCompanyController
     protected function executeConfirmDeleteAction(Request $request): array
     {
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnitTransfer = $this->getFactory()
-            ->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnitForCurrentCompany($idCompanyBusinessUnit);
 
-        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+        if ($companyBusinessUnitTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -320,13 +310,10 @@ class BusinessUnitController extends AbstractCompanyController
     protected function getCompanyBusinessUnitDetailsResponseData(Request $request): array
     {
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID);
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnitTransfer = $this->getFactory()->getCompanyBusinessUnitClient()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->findCompanyBusinessUnitForCurrentCompany($idCompanyBusinessUnit);
 
-        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitTransfer->getFkCompany())) {
+        if ($companyBusinessUnitTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -372,14 +359,18 @@ class BusinessUnitController extends AbstractCompanyController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function companyBusinessUnitSave(array $data): CompanyBusinessUnitResponseTransfer
+    protected function companyBusinessUnitSave(array $data, ?int $idCompanyBusinessUnit = null): CompanyBusinessUnitResponseTransfer
     {
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->fromArray($data, true);
+        unset($data[CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT]);
+
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+            ->fromArray($data, true)
+            ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->setFkCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         $companyBusinessUnitClient = $this->getFactory()->getCompanyBusinessUnitClient();
 
-        if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+        if ($idCompanyBusinessUnit !== null) {
             return $companyBusinessUnitClient->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 

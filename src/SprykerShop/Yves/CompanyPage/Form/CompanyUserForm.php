@@ -31,14 +31,14 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CompanyUserForm extends AbstractType
 {
     /**
-     * @var string
+     * @deprecated The customer is registered from the submitted email on create and read from the persisted company user on update; the submitted value is ignored.
      */
-    public const FIELD_ID_CUSTOMER = 'id_customer';
+    public const string FIELD_ID_CUSTOMER = 'id_customer';
 
     /**
-     * @var string
+     * @deprecated The company user is loaded by the request ID within the company of the authenticated session; the submitted value is ignored.
      */
-    public const FIELD_ID_COMPANY_USER = 'id_company_user';
+    public const string FIELD_ID_COMPANY_USER = 'id_company_user';
 
     /**
      * @var string
@@ -71,9 +71,9 @@ class CompanyUserForm extends AbstractType
     public const FIELD_FK_COMPANY = 'fk_company';
 
     /**
-     * @var string
+     * @deprecated The customer is registered from the submitted email on create and read from the persisted company user on update; the submitted value is ignored.
      */
-    public const FIELD_FK_CUSTOMER = 'fk_customer';
+    public const string FIELD_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @var string
@@ -168,6 +168,8 @@ class CompanyUserForm extends AbstractType
     }
 
     /**
+     * @deprecated The company user is loaded by the request ID within the company of the authenticated session; the submitted value is ignored.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -182,6 +184,8 @@ class CompanyUserForm extends AbstractType
     }
 
     /**
+     * @deprecated The customer is registered from the submitted email on create and read from the persisted company user on update; the submitted value is ignored.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -199,6 +203,8 @@ class CompanyUserForm extends AbstractType
     }
 
     /**
+     * @deprecated The customer is registered from the submitted email on create and read from the persisted company user on update; the submitted value is ignored.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this

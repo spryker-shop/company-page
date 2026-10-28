@@ -145,14 +145,9 @@ class CompanyRoleController extends AbstractCompanyController
      */
     protected function executeDetailsAction(Request $request): array
     {
-        $idCompanyRole = $request->query->getInt('id');
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($request->query->getInt('id'));
 
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($companyRoleTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -195,13 +190,9 @@ class CompanyRoleController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
         }
 
-        $companyRoleTransfer = $companyRoleDeleteForm->getData();
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany((int)$companyRoleDeleteForm->getData()->getIdCompanyRole());
 
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($companyRoleTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -232,16 +223,9 @@ class CompanyRoleController extends AbstractCompanyController
             throw new AccessDeniedHttpException();
         }
 
-        $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE));
 
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($idCompanyRole);
-
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($companyRoleTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -264,15 +248,9 @@ class CompanyRoleController extends AbstractCompanyController
     protected function executeConfirmDeleteAction(Request $request)
     {
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
+        $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($idCompanyRole);
 
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setIdCompanyRole($idCompanyRole);
-
-        $companyRoleTransfer = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer);
-
-        if (!$this->isCurrentCustomerRelatedToCompany($companyRoleTransfer->getFkCompany())) {
+        if ($companyRoleTransfer === null) {
             throw new NotFoundHttpException();
         }
 
@@ -393,17 +371,23 @@ class CompanyRoleController extends AbstractCompanyController
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         if ($companyRoleForm->isSubmitted() === false) {
-            $idCompany = $this->findCurrentCompanyUserTransfer()->getFkCompany();
-            $data = $dataProvider->getData($idCompany, $idCompanyRole);
+            $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($idCompanyRole);
 
-            if (!$this->isCurrentCustomerRelatedToCompany($data[CompanyRoleForm::FIELD_FK_COMPANY])) {
+            if ($companyRoleTransfer === null) {
                 throw new NotFoundHttpException();
             }
-            $companyRoleForm->setData($data);
+
+            $companyRoleForm->setData($dataProvider->mapCompanyRoleTransferToFormData($companyRoleTransfer));
         }
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
-            $this->updateCompanyRole($companyRoleForm->getData());
+            $companyRoleTransfer = $this->findCompanyRoleForCurrentCompany($idCompanyRole);
+
+            if ($companyRoleTransfer === null) {
+                throw new NotFoundHttpException();
+            }
+
+            $this->updateCompanyRole($companyRoleForm->getData(), $companyRoleTransfer);
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_COMPANY_ROLE_UPDATE);
 
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_ROLE);
@@ -440,8 +424,9 @@ class CompanyRoleController extends AbstractCompanyController
      */
     protected function createCompanyRole(array $data): CompanyRoleResponseTransfer
     {
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->fromArray($data, true);
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->fromArray($this->removeIdentityKeys($data), true)
+            ->setFkCompany($this->findCurrentCompanyUserTransfer()->getFkCompany());
 
         return $this->getFactory()
             ->getCompanyRoleClient()
@@ -450,24 +435,36 @@ class CompanyRoleController extends AbstractCompanyController
 
     /**
      * @param array<string, mixed> $data
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $persistedCompanyRoleTransfer
      *
      * @return void
      */
-    protected function updateCompanyRole(array $data): void
+    protected function updateCompanyRole(array $data, CompanyRoleTransfer $persistedCompanyRoleTransfer): void
     {
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->fromArray($data, true);
-
-        $companyRolePermissionCollection = $this->getFactory()
-            ->getCompanyRoleClient()
-            ->getCompanyRoleById($companyRoleTransfer)
-            ->getPermissionCollection();
-
-        $companyRoleTransfer->setPermissionCollection($companyRolePermissionCollection);
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->fromArray($this->removeIdentityKeys($data), true)
+            ->setIdCompanyRole($persistedCompanyRoleTransfer->getIdCompanyRole())
+            ->setFkCompany($persistedCompanyRoleTransfer->getFkCompany())
+            ->setPermissionCollection($persistedCompanyRoleTransfer->getPermissionCollection());
 
         $this->getFactory()
             ->getCompanyRoleClient()
             ->updateCompanyRole($companyRoleTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
+    protected function removeIdentityKeys(array $data): array
+    {
+        unset(
+            $data[CompanyRoleForm::FIELD_ID_COMPANY_ROLE],
+            $data[CompanyRoleForm::FIELD_FK_COMPANY],
+        );
+
+        return $data;
     }
 
     /**

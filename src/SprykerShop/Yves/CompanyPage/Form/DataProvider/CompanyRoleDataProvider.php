@@ -31,9 +31,16 @@ class CompanyRoleDataProvider
 
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setIdCompanyRole($idCompanyRole);
-        $companyRole = $this->companyRoleClient->getCompanyRoleById($companyRoleTransfer);
 
-        return $companyRole->modifiedToArray();
+        return $this->mapCompanyRoleTransferToFormData($this->companyRoleClient->getCompanyRoleById($companyRoleTransfer));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function mapCompanyRoleTransferToFormData(CompanyRoleTransfer $companyRoleTransfer): array
+    {
+        return $companyRoleTransfer->modifiedToArray();
     }
 
     /**

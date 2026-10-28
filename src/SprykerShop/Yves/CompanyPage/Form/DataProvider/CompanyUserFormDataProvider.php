@@ -66,12 +66,17 @@ class CompanyUserFormDataProvider
             return $this->getDefaultCompanyUserData($idCompany, $options);
         }
 
-        $companyUserTransfer = $this->loadCompanyUserTransfer($idCompanyUser);
-        $customerTransfer = $companyUserTransfer->getCustomer();
+        return $this->mapCompanyUserTransferToFormData($this->loadCompanyUserTransfer($idCompanyUser));
+    }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function mapCompanyUserTransferToFormData(CompanyUserTransfer $companyUserTransfer): array
+    {
         return array_merge(
             $companyUserTransfer->toArray(),
-            $customerTransfer->toArray(),
+            $companyUserTransfer->getCustomer()->toArray(),
         );
     }
 
