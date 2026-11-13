@@ -12,14 +12,17 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerShop\Yves\CompanyPage\Form\CompanyUnitAddressForm;
 use SprykerShop\Yves\ShopApplication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \SprykerShop\Yves\CompanyPage\CompanyPageFactory getFactory()
@@ -167,6 +170,69 @@ abstract class AbstractCompanyController extends AbstractController
         $companyUserTransfer = $this->findCurrentCompanyUserTransfer();
 
         return ($companyUserTransfer !== null && $companyUserTransfer->getFkCompany() === $idCompany);
+    }
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function assertCompanyUnitAddressRelatedToCurrentCompany(int $idCompanyUnitAddress): CompanyUnitAddressTransfer
+    {
+        if (!$idCompanyUnitAddress) {
+            throw new NotFoundHttpException();
+        }
+
+        $companyUnitAddressTransfer = $this->getFactory()
+            ->getCompanyUnitAddressClient()
+            ->getCompanyUnitAddressById((new CompanyUnitAddressTransfer())->setIdCompanyUnitAddress($idCompanyUnitAddress));
+        $idCompany = $companyUnitAddressTransfer->getFkCompany();
+
+        if ($idCompany === null || !$this->isCurrentCustomerRelatedToCompany($idCompany)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $companyUnitAddressTransfer;
+    }
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function assertCompanyBusinessUnitRelatedToCurrentCompany(int $idCompanyBusinessUnit): void
+    {
+        if ($idCompanyBusinessUnit && !$this->findCompanyBusinessUnitForCurrentCompany($idCompanyBusinessUnit)) {
+            throw new NotFoundHttpException();
+        }
+    }
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function getCurrentCompanyIdOrFail(): int
+    {
+        $idCompany = $this->findCurrentCompanyUserTransfer()?->getFkCompany();
+
+        if ($idCompany === null) {
+            throw new NotFoundHttpException();
+        }
+
+        return $idCompany;
+    }
+
+    /**
+     * @param array<string, mixed> $companyUnitAddressData
+     *
+     * @return array<string, mixed>
+     */
+    protected function mapCompanyUnitAddressIdentifiers(
+        array $companyUnitAddressData,
+        ?int $idCompanyUnitAddress,
+        int $idCompanyBusinessUnit,
+        int $idCompany
+    ): array {
+        $companyUnitAddressData[CompanyUnitAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS] = $idCompanyUnitAddress;
+        $companyUnitAddressData[CompanyUnitAddressForm::FIELD_FK_COMPANY] = $idCompany;
+        $companyUnitAddressData[CompanyUnitAddressForm::FIELD_FK_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit ?: null;
+
+        return $companyUnitAddressData;
     }
 
     protected function getSelectablePermissionsList(int $idCompanyRole): PermissionCollectionTransfer

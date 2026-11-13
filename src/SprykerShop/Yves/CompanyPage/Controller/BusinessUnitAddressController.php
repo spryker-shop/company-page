@@ -15,7 +15,6 @@ use SprykerShop\Yves\CompanyPage\Form\CompanyBusinessUnitAddressForm;
 use SprykerShop\Yves\CompanyPage\Plugin\Router\CompanyPageRouteProviderPlugin;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BusinessUnitAddressController extends AbstractCompanyController
 {
@@ -97,6 +96,8 @@ class BusinessUnitAddressController extends AbstractCompanyController
      */
     protected function executeCreateAction(Request $request)
     {
+        $idCompany = $this->getCurrentCompanyIdOrFail();
+
         $dataProvider = $this
             ->getFactory()
             ->createCompanyPageFormFactory()
@@ -109,6 +110,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
             ->handleRequest($request);
 
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
+        $this->assertCompanyBusinessUnitRelatedToCurrentCompany($idCompanyBusinessUnit);
 
         if ($addressForm->isSubmitted() === false) {
             $addressForm->setData(
@@ -121,7 +123,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
         }
 
         if ($addressForm->isSubmitted() === true && $addressForm->isValid() === true) {
-            $data = $addressForm->getData();
+            $data = $this->mapCompanyUnitAddressIdentifiers($addressForm->getData(), null, $idCompanyBusinessUnit, $idCompany);
             $data[CompanyUnitAddressTransfer::COMPANY_BUSINESS_UNITS][CompanyBusinessUnitCollectionTransfer::COMPANY_BUSINESS_UNITS][][CompanyBusinessUnitTransfer::ID_COMPANY_BUSINESS_UNIT] = $idCompanyBusinessUnit;
 
             $companyUnitAddressTransfer = $this->getFactory()
@@ -152,6 +154,7 @@ class BusinessUnitAddressController extends AbstractCompanyController
      */
     protected function executeUpdateAction(Request $request)
     {
+        $idCompany = $this->getCurrentCompanyIdOrFail();
         $idCompanyUnitAddress = $request->query->getInt(static::REQUEST_COMPANY_BUSINESS_UNIT_ID);
         $idCompanyBusinessUnit = $request->query->getInt(static::REQUEST_PARAM_ID_COMPANY_BUSINESS_UNIT);
 
@@ -159,13 +162,14 @@ class BusinessUnitAddressController extends AbstractCompanyController
             return $this->redirectResponseInternal(CompanyPageRouteProviderPlugin::ROUTE_NAME_COMPANY_BUSINESS_UNIT);
         }
 
+        $this->assertCompanyUnitAddressRelatedToCurrentCompany($idCompanyUnitAddress);
+        $this->assertCompanyBusinessUnitRelatedToCurrentCompany($idCompanyBusinessUnit);
+
         $companyBusinessUnitAddressForm = $this->getCompanyBusinessUnitAddressForm($idCompanyUnitAddress, $idCompanyBusinessUnit)
             ->handleRequest($request);
 
-        $this->assertCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm);
-
         if ($companyBusinessUnitAddressForm->isSubmitted() && $companyBusinessUnitAddressForm->isValid()) {
-            $companyUnitAddressResponseTransfer = $this->updateCompanyBusinessUnitAddress($companyBusinessUnitAddressForm);
+            $companyUnitAddressResponseTransfer = $this->updateCompanyBusinessUnitAddress($companyBusinessUnitAddressForm, $idCompanyBusinessUnit, $idCompany);
 
             if ($companyUnitAddressResponseTransfer->getIsSuccessful()) {
                 $this->addTranslatedSuccessMessage(static::MESSAGE_BUSINESS_UNIT_ADDRESS_UPDATE_SUCCESS, [
@@ -187,34 +191,26 @@ class BusinessUnitAddressController extends AbstractCompanyController
         ];
     }
 
-    protected function updateCompanyBusinessUnitAddress(FormInterface $companyBusinessUnitAddressForm): CompanyUnitAddressResponseTransfer
-    {
+    protected function updateCompanyBusinessUnitAddress(
+        FormInterface $companyBusinessUnitAddressForm,
+        int $idCompanyBusinessUnit,
+        int $idCompany
+    ): CompanyUnitAddressResponseTransfer {
+        $companyUnitAddressData = $companyBusinessUnitAddressForm->getData();
+        $idCompanyUnitAddress = (int)$companyUnitAddressData[CompanyBusinessUnitAddressForm::FIELD_ID_COMPANY_UNIT_ADDRESS];
+        $this->assertCompanyUnitAddressRelatedToCurrentCompany($idCompanyUnitAddress);
+
+        $companyUnitAddressData = $this->mapCompanyUnitAddressIdentifiers($companyUnitAddressData, $idCompanyUnitAddress, $idCompanyBusinessUnit, $idCompany);
+
         return $this->getFactory()
             ->getCompanyUnitAddressClient()
-            ->updateCompanyUnitAddress(
-                (new CompanyUnitAddressTransfer())
-                    ->fromArray($companyBusinessUnitAddressForm->getData()),
-            );
+            ->updateCompanyUnitAddress((new CompanyUnitAddressTransfer())->fromArray($companyUnitAddressData));
     }
 
     protected function addCompanyUnitAddressResponseErrorMessages(CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer): void
     {
         foreach ($companyUnitAddressResponseTransfer->getMessages() as $responseMessageTransfer) {
             $this->addErrorMessage($responseMessageTransfer->getText());
-        }
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $companyBusinessUnitAddressForm
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
-     */
-    protected function assertCurrentCustomerRelatedToCompany(FormInterface $companyBusinessUnitAddressForm): void
-    {
-        if (!$this->isCurrentCustomerRelatedToCompany($companyBusinessUnitAddressForm->getData()[CompanyBusinessUnitAddressForm::FIELD_FK_COMPANY])) {
-            throw new NotFoundHttpException();
         }
     }
 

@@ -137,6 +137,8 @@ class CompanyUnitAddressForm extends AbstractType
     }
 
     /**
+     * @deprecated The submitted value is ignored: the controller sets `fk_company` from the session. The hidden field is kept for template compatibility only.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -171,6 +173,8 @@ class CompanyUnitAddressForm extends AbstractType
     }
 
     /**
+     * @deprecated The submitted value is ignored: the controller sets `fk_company_business_unit` from the validated request parameter. The hidden field is kept for template compatibility only.
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
